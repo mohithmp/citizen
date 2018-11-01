@@ -1,0 +1,21 @@
+### Please don't delete. Use the same keys for uniformity ###
+
+### COMMON HTTP ERRORS ###
+invalid.api.call = Invalid API call.
+access.forbidden = Your access to the API is forbidden.
+
+
+### INPUT VALIDATION ERRORS ###
+invalid.json.request = Invalid json request.
+invalid.input = Invalid {0} field.
+field.missing = {0} field is missing.
+min.length.validation = {0} field should contain minimum of {1} characters.
+max.length.validation = {0} field should contain maximum of {1} characters.
+pattern.validation = {0} field is not matching with expected format.
+invalid.email.format = Email format is invalid.
+session.invalid = Session is invalid.
+type.mismatch = Type mismatch. {0} field should be of type {1};
+min.items = {0} field should contain atleast one element.
+
+### OTHERS ###
+technical.error = Oops! Something went wrong!!
