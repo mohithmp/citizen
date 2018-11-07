@@ -65,7 +65,7 @@ public class AccountController extends BaseController {
 
 	@BodyParser.Of(BodyParser.Json.class)
 	@ValidateJson(UpdateResearcherRequestDTO.class)
-	@AuthenticateAccount(isPublicApi = true)
+	@AuthenticateAccount()
 	@AccountAccessValidation(ACCOUNT_TYPE.RESEARCHER)
 	public CompletionStage<Result> updateResearcher() {
 		JsonNode inputData = request().body().asJson();
