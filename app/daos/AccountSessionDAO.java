@@ -49,8 +49,8 @@ public class AccountSessionDAO {
 		accountSession.setDeviceToken(payload.deviceToken);
 		accountSession.setDeviceType(payload.deviceType);
 
-		accountSession.setUpdatedTime(new Date());
-		accountSession.setCreatedTime(new Date());
+		accountSession.setUpdatedTime(new Date().getTime());
+		accountSession.setCreatedTime(new Date().getTime());
 
 		if (payload.deviceType == DeviceType.BROWSER || payload.deviceType == DeviceType.UNKNOWN) {
 			accountSession.setDeviceId(token);

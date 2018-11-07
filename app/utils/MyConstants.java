@@ -21,6 +21,14 @@ public class MyConstants {
 		public static final String SESSION_TOKEN_HEADER = "Session-Token";
 	}
 
+	public class ApiResponseKey {
+		public static final String MESSAGE = "message";
+	}
+
+	public class ApiSuccessResponse {
+		public static final String SUCCESS = "success";
+	}
+
 	public class ApiFailureMessages {
 		public static final String INVALID_JSON_REQUEST = "invalid.json.request";
 		public static final String INVALID_API_CALL = "invalid.api.call";

@@ -21,9 +21,9 @@ public class AccountSession {
 
 	private String deviceToken;
 
-	private Date createdTime;
+	private Long createdTime;
 
-	private Date updatedTime;
+	private Long updatedTime;
 
 	public String getId() {
 		return id;
@@ -81,20 +81,21 @@ public class AccountSession {
 		this.deviceToken = deviceToken;
 	}
 
-	public Date getCreatedTime() {
+	public Long getCreatedTime() {
 		return createdTime;
 	}
 
-	public void setCreatedTime(Date createdTime) {
+	public void setCreatedTime(Long createdTime) {
 		this.createdTime = createdTime;
 	}
 
-	public Date getUpdatedTime() {
+	public Long getUpdatedTime() {
 		return updatedTime;
 	}
 
-	public void setUpdatedTime(Date updatedTime) {
+	public void setUpdatedTime(Long updatedTime) {
 		this.updatedTime = updatedTime;
 	}
+
 
 }

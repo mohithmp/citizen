@@ -6,12 +6,13 @@ import javax.inject.Inject;
 import daos.AccountDAO;
 import daos.AccountSessionDAO;
 import dtos.request.AccountSignUpRequestDTO;
+import dtos.request.UpdateResearcherRequestDTO;
 import dtos.response.AccountResponseDTO;
 import exceptions.MyException;
 import models.Account;
 import models.AccountSession;
-import pojo.ResearcherProfilePOJO;
-import pojo.UserProfilePOJO;
+import models.ResearcherProfilePOJO;
+import models.UserProfilePOJO;
 import utils.ConstructResponseUtils;
 import utils.CustomObjectMapper;
 import utils.MyConstants.ACCOUNT_TYPE;
@@ -85,6 +86,14 @@ public class AccountService {
 		AccountSession accountSession = accountSessionDAO.create(account, payload);
 
 		return constructResponseUtils.constructAccountResponse(account, accountSession);
+	}
+
+	public void updateResearcher(UpdateResearcherRequestDTO payload) throws MyException {
+
+		String accountId = accountSessionDAO.getAccountIdByContext();
+
+		accountDAO.update(accountId, payload.name);
+
 	}
 
 }

@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.UUID;
 
 import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.query.Query;
+import org.mongodb.morphia.query.UpdateOperations;
 
 import exceptions.MyException;
 import models.Account;
@@ -29,10 +31,22 @@ public class AccountDAO {
 
 	public Account add(Account newAccount) {
 		newAccount.setAccountId(UUID.randomUUID().toString());
-		newAccount.setCreatedTime(new Date());
-		newAccount.setUpdatedTime(new Date());
+		newAccount.setCreatedTime(new Date().getTime());
+		newAccount.setUpdatedTime(new Date().getTime());
 		ds.save(newAccount);
 		return newAccount;
+	}
+
+	public void update(String accountId, String name) {
+		Query<Account> account = ds.find(Account.class).filter("accountId", accountId);
+
+		UpdateOperations<Account> ops = ds.createUpdateOperations(Account.class);
+		if (name != null) {
+			ops.set("researcher.name", name);
+		}
+		ops.set("updatedTime", new Date().getTime());
+
+		ds.update(account, ops);
 	}
 
 }

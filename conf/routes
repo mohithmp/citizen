@@ -12,3 +12,4 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 POST    /v1/account/signup                     	controllers.AccountController.signUp()
 POST    /v1/account/signin                     	controllers.AccountController.signIn()
+PUT	    /v1/researcher	                     	controllers.AccountController.updateResearcher()

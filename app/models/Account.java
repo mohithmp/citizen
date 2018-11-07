@@ -1,11 +1,6 @@
 package models;
 
-import java.util.Date;
-
 import org.mongodb.morphia.annotations.Id;
-
-import pojo.ResearcherProfilePOJO;
-import pojo.UserProfilePOJO;
 
 public class Account {
 
@@ -24,9 +19,13 @@ public class Account {
 
 	private UserProfilePOJO user;
 
-	private Date createdTime;
+	private Long createdTime;
 
-	private Date updatedTime;
+	private Long updatedTime;
+
+	private boolean isEmailVerified = false;
+
+	private boolean isDeleted = false;
 
 	public String getId() {
 		return id;
@@ -68,19 +67,19 @@ public class Account {
 		this.accountType = accountType;
 	}
 
-	public Date getCreatedTime() {
+	public Long getCreatedTime() {
 		return createdTime;
 	}
 
-	public void setCreatedTime(Date createdTime) {
+	public void setCreatedTime(Long createdTime) {
 		this.createdTime = createdTime;
 	}
 
-	public Date getUpdatedTime() {
+	public Long getUpdatedTime() {
 		return updatedTime;
 	}
 
-	public void setUpdatedTime(Date updatedTime) {
+	public void setUpdatedTime(Long updatedTime) {
 		this.updatedTime = updatedTime;
 	}
 
@@ -98,6 +97,22 @@ public class Account {
 
 	public void setUser(UserProfilePOJO user) {
 		this.user = user;
+	}
+
+	public boolean isEmailVerified() {
+		return isEmailVerified;
+	}
+
+	public void setEmailVerified(boolean isEmailVerified) {
+		this.isEmailVerified = isEmailVerified;
+	}
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
 	}
 
 }

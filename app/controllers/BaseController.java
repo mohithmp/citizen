@@ -1,6 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import dtos.response.FailureResponseTemplate;
 import exceptions.MyException;
@@ -27,6 +28,12 @@ public class BaseController extends Controller {
 
 	public Result successResponse() {
 		return noContent();
+	}
+
+	public CompletionStage<Result> successResponsePromise(String message) {
+		ObjectNode response = Json.newObject();
+		response.put("message", message);
+		return promise(successResponse(response));
 	}
 
 	public CompletionStage<Result> successResponsePromise(Object object) {
