@@ -39,10 +39,16 @@ public class MyConstants {
 
 		public static final String ACCOUNT_DOESNT_EXIST = "account.doesnt.exist";
 		public static final String EMAIL_ALREADY_EXIST = "email.already.exist";
+		public static final String INVALID_ACCOUNT_TYPE = "invalid.account.type";
 	}
 
 	public class PushNotificationMessages {
 
+	}
+
+	public class ACCOUNT_TYPE {
+		public static final int RESEARCHER = 1;
+		public static final int USER = 2;
 	}
 
 }

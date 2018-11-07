@@ -10,7 +10,11 @@ import dtos.response.AccountResponseDTO;
 import exceptions.MyException;
 import models.Account;
 import models.AccountSession;
+import pojo.ResearcherProfilePOJO;
+import pojo.UserProfilePOJO;
+import utils.ConstructResponseUtils;
 import utils.CustomObjectMapper;
+import utils.MyConstants.ACCOUNT_TYPE;
 import utils.MyConstants.ApiFailureMessages;
 import utils.PasswordEncryptDecrypt;
 
@@ -24,6 +28,8 @@ public class AccountService {
 	CustomObjectMapper mapper;
 	@Inject
 	PasswordEncryptDecrypt passwordEncrypt;
+	@Inject
+	ConstructResponseUtils constructResponseUtils;
 
 	public AccountResponseDTO signUpAccount(AccountSignUpRequestDTO payload) throws MyException {
 
@@ -33,9 +39,23 @@ public class AccountService {
 
 		/* Create Account */
 		Account newAccount = new Account();
-		newAccount.setName(payload.name);
 		newAccount.setEmail(payload.email);
 		newAccount.setAccountType(payload.accountType);
+
+		// Set Profile Details for Researcher and User
+		if (payload.accountType == ACCOUNT_TYPE.RESEARCHER) {
+			ResearcherProfilePOJO researcher = new ResearcherProfilePOJO();
+			researcher.setName(payload.name);
+			researcher.setPoints(0);
+			newAccount.setResearcher(researcher);
+		} else if (payload.accountType == ACCOUNT_TYPE.USER) {
+			UserProfilePOJO user = new UserProfilePOJO();
+			user.setName(payload.name);
+			user.setPoints(0);
+			newAccount.setUser(user);
+		} else {
+			throw new MyException(ApiFailureMessages.INVALID_ACCOUNT_TYPE);
+		}
 
 		/* Hash the password */
 		newAccount.setPassword(passwordEncrypt.generatePasswordHash(payload.password));
@@ -44,7 +64,7 @@ public class AccountService {
 		/* Create Account Session */
 		AccountSession accountSession = accountSessionDAO.create(newAccount, payload);
 
-		return constructAccountResponse(newAccount, accountSession);
+		return constructResponseUtils.constructAccountResponse(newAccount, accountSession);
 	}
 
 	public AccountResponseDTO signInAccount(AccountSignUpRequestDTO payload) throws MyException {
@@ -64,23 +84,7 @@ public class AccountService {
 		/* Create Account Session */
 		AccountSession accountSession = accountSessionDAO.create(account, payload);
 
-		return constructAccountResponse(account, accountSession);
-	}
-
-	private AccountResponseDTO constructAccountResponse(Account account, AccountSession accountSession) {
-
-		AccountResponseDTO accountResponse = new AccountResponseDTO();
-
-		accountResponse.accountId = account.getAccountId();
-		accountResponse.name = account.getName();
-		accountResponse.accountType = account.getAccountType();
-		accountResponse.email = account.getEmail();
-
-		if (accountSession != null) {
-			accountResponse.token = accountSession.getToken();
-		}
-
-		return accountResponse;
+		return constructResponseUtils.constructAccountResponse(account, accountSession);
 	}
 
 }

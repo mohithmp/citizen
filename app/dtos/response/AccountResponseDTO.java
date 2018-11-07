@@ -11,4 +11,6 @@ public class AccountResponseDTO {
 	public Integer accountType;
 
 	public String token;
+	
+	public Integer points;
 }

@@ -14,8 +14,6 @@ public class Account {
 
 	private String accountId;
 
-	private String name;
-
 	private String email;
 
 	private String password;
@@ -44,14 +42,6 @@ public class Account {
 
 	public void setAccountId(String accountId) {
 		this.accountId = accountId;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 
 	public String getEmail() {
