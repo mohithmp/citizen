@@ -77,8 +77,7 @@ public class AccountService {
 			throw new MyException(ApiFailureMessages.ACCOUNT_DOESNT_EXIST);
 		}
 
-		String encryptedPassword = passwordEncrypt.generatePasswordHash(payload.password);
-		if (!passwordEncrypt.isPasswordSame(account.getPassword(), encryptedPassword)) {
+		if (!passwordEncrypt.isPasswordSame(payload.password, account.getPassword())) {
 			throw new MyException(ApiFailureMessages.INVALID_PASSWORD);
 		}
 
@@ -92,7 +91,7 @@ public class AccountService {
 
 		String accountId = accountSessionDAO.getAccountIdByContext();
 
-		accountDAO.update(accountId, payload.name);
+		accountDAO.update(accountId, payload.name, payload.email, payload.password);
 
 	}
 

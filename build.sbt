@@ -10,6 +10,7 @@ libraryDependencies ++= Seq(
   javaJdbc,
   cache,
   javaWs,
+  filters,
   "com.github.fge" % "json-schema-validator" % "2.2.6",
   "org.mongodb.morphia" % "morphia" % "1.2.1",
   "org.mindrot" % "jbcrypt" % "0.3m",
