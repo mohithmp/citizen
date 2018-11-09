@@ -14,8 +14,6 @@ public class HomeController extends Controller {
 
 	public Result index() {
 
-		System.out.println(configuration.getString("demo.example"));
-
 		return ok(index.render("Your new application is ready!!!"));
 	}
 
