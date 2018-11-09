@@ -68,11 +68,11 @@ public class AccountController extends BaseController {
 	@AuthenticateAccount()
 	@AccountAccessValidation(ACCOUNT_TYPE.RESEARCHER)
 	public CompletionStage<Result> updateResearcher() {
+		//Request Raw Json
 		JsonNode inputData = request().body().asJson();
-		UpdateResearcherRequestDTO payload = new UpdateResearcherRequestDTO();
-
+		
 		try {
-			payload = customObjectMapper.getInstance().convertValue(inputData, UpdateResearcherRequestDTO.class);
+			UpdateResearcherRequestDTO payload = customObjectMapper.getInstance().convertValue(inputData, UpdateResearcherRequestDTO.class);
 			accountService.updateResearcher(payload);
 
 		} catch (Exception e) {

@@ -92,8 +92,8 @@ public class AccountService {
 
 		String accountId = accountSessionDAO.getAccountIdByContext();
 
-		accountDAO.update(accountId, payload.name);
-
+		accountDAO.update(accountId, payload.name, payload.email, payload.password);
+		
 	}
 
 }
