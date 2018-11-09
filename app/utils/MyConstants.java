@@ -59,4 +59,10 @@ public class MyConstants {
 		public static final int USER = 2;
 	}
 
+	public class FIELD_TYPE {
+		public static final int TEXT = 1;
+		public static final int NUMBER = 2;
+		public static final int IMAGE = 3;
+	}
+	
 }

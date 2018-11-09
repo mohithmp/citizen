@@ -10,12 +10,10 @@ public class PasswordEncryptDecrypt {
 	}
 
 	public boolean isPasswordSame(String userPassword, String encryptedPassword) {
-		if (userPassword == null) {
+		if (userPassword == null || encryptedPassword == null) {
 			return false;
 		}
-		if (encryptedPassword == null) {
-			return false;
-		}
+
 		return BCrypt.checkpw(userPassword, encryptedPassword);
 	}
 
