@@ -1,6 +1,5 @@
 package models;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -13,6 +12,8 @@ public class Observation {
 
 	private String observationId;
 
+	private String accountId;
+
 	private String title;
 
 	private String description;
@@ -21,7 +22,7 @@ public class Observation {
 
 	private Integer category;
 
-	private List<Tag> tags;
+	private List<String> tags;
 
 	private HashMap<String, String> metadata;
 
@@ -79,11 +80,11 @@ public class Observation {
 		this.category = category;
 	}
 
-	public List<Tag> getTags() {
+	public List<String> getTags() {
 		return tags;
 	}
 
-	public void setTags(List<Tag> tags) {
+	public void setTags(List<String> tags) {
 		this.tags = tags;
 	}
 
@@ -117,6 +118,14 @@ public class Observation {
 
 	public void setUpdatedTime(Long updatedTime) {
 		this.updatedTime = updatedTime;
+	}
+
+	public String getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(String accountId) {
+		this.accountId = accountId;
 	}
 
 }

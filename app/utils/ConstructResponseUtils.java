@@ -1,8 +1,15 @@
 package utils;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import dtos.response.AccountResponseDTO;
 import models.Account;
 import models.AccountSession;
+import models.Observation;
+import models.Tag;
+import pojo.ObservationResponse;
+import pojo.TagResponse;
 import utils.MyConstants.ACCOUNT_TYPE;
 
 public class ConstructResponseUtils {
@@ -29,6 +36,24 @@ public class ConstructResponseUtils {
 		}
 
 		return accountResponse;
+	}
+
+	public ObservationResponse constructObservationResponse(Observation observation) {
+
+		ObservationResponse response = new ObservationResponse();
+
+		response.observationId = observation.getObservationId();
+		response.title = observation.getTitle();
+		response.description = observation.getDescription();
+		response.fields = observation.getFields();
+		response.category = observation.getCategory();
+		response.tags = observation.getTags();
+		response.metadata = observation.getMetadata();
+		response.isDeleted = observation.getIsDeleted();
+		response.createdTime = observation.getCreatedTime();
+		response.updatedTime = observation.getUpdatedTime();
+
+		return response;
 	}
 
 }
