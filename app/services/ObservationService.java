@@ -2,16 +2,26 @@ package services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
 import org.mongodb.morphia.query.Query;
 
+import daos.AccountSessionDAO;
 import daos.ObservationDAO;
+import dtos.request.CreateObservationRequestDTO;
+import dtos.response.CreateObservationresponseDTO;
 import dtos.response.GetObservationResponseDTO;
+import exceptions.MyException;
+import models.FieldPOJO;
 import models.Observation;
+import play.libs.Json;
+import pojo.FieldRequestPOJO;
 import pojo.ObservationResponse;
 import utils.ConstructResponseUtils;
+import utils.MyConstants;
+import utils.MyConstants.ApiFailureMessages;
 
 public class ObservationService {
 
@@ -19,6 +29,8 @@ public class ObservationService {
 	ObservationDAO observationDAO;
 	@Inject
 	ConstructResponseUtils constructResponseUtils;
+	@Inject
+	AccountSessionDAO accountSessionDAO;
 
 	public GetObservationResponseDTO getObservations(String accountId, String searchText, int page, int limit) {
 
@@ -48,6 +60,37 @@ public class ObservationService {
 		response.totalCount = totalCount;
 
 		return response;
+	}
+
+	public CreateObservationresponseDTO createObervation(CreateObservationRequestDTO payload) throws MyException {
+		// TODO Auto-generated method stub
+
+		for (FieldRequestPOJO field : payload.fields) {
+			if (field.fieldTitle == null) {
+				throw new MyException(ApiFailureMessages.INVALID_FIELD);
+			}
+			if (field.fieldType == null || !MyConstants.FIELD_TYPES.contains(field.fieldType)) {
+				throw new MyException(ApiFailureMessages.INVALID_FIELD);
+			}
+		}
+		Observation newObservation = new Observation();
+		newObservation.setAccountId(accountSessionDAO.getAccountIdByContext());
+		newObservation.setTitle(payload.title);
+		newObservation.setDescription(payload.description);
+		List<FieldPOJO> fd = new ArrayList<>();
+		for (FieldRequestPOJO field : payload.fields) {
+			FieldPOJO fp = new FieldPOJO();
+			fp.setId(UUID.randomUUID().toString());
+			fp.setTitle(field.fieldTitle);
+			fp.setType(field.fieldType);
+			fd.add(fp);
+		}
+		newObservation.setFields(fd);
+		newObservation.setCategory(payload.category);
+		newObservation.setTags(payload.tags);
+		Observation observation = observationDAO.add(newObservation);
+
+		return null;
 	}
 
 }
