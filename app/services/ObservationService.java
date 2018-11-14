@@ -30,7 +30,7 @@ public class ObservationService {
 
 		// TODO Search based on Tags
 		if (searchText != null) {
-			query.filter("title", searchText);
+			query.search("title", searchText);
 		}
 
 		// Get Paged list (Pagination)

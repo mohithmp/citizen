@@ -5,6 +5,9 @@
 # An example controller showing a sample home page
 GET     /                           controllers.HomeController.index
 
+GET     /test                           controllers.TestController.test
+
+
 # POST    /sample                     controllers.AutoController.sample
 
 # Map static resources from the /public folder to the /assets URL path

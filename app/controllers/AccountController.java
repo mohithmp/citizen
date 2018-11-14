@@ -1,5 +1,8 @@
 package controllers;
 
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.concurrent.CompletionStage;
 
 import javax.inject.Inject;
@@ -13,6 +16,7 @@ import dtos.request.AccountSignInRequestDTO;
 import dtos.request.AccountSignUpRequestDTO;
 import dtos.request.UpdateResearcherRequestDTO;
 import dtos.response.AccountResponseDTO;
+import play.Environment;
 import play.mvc.BodyParser;
 import play.mvc.Result;
 import services.AccountService;
@@ -82,5 +86,6 @@ public class AccountController extends BaseController {
 
 		return successResponsePromise(ApiSuccessResponse.SUCCESS);
 	}
-
+	
+	
 }
