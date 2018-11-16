@@ -26,7 +26,7 @@ public class Observation {
 
 	private HashMap<String, String> metadata;
 
-	private Boolean isDeleted;
+	private Boolean isDeleted = false;
 
 	private Long createdTime;
 

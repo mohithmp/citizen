@@ -28,7 +28,7 @@ public class RecordService {
 	public void addRecord(AddRecordRequestDTO payload) throws MyException {
 
 		String accountId = accountSessionDAO.getAccountIdByContext();
-
+		
 		Observation observation = observationDAO.findAccountObservation(accountId, payload.observationId);
 
 		if (observation == null) {
@@ -46,6 +46,7 @@ public class RecordService {
 			if (!fieldNames.contains(record.getKey())) {
 				throw new MyException(ApiFailureMessages.RECORD_INVALID_FIELD);
 			}
+			// TODO Validate Field Type
 		}
 
 		// Categorize Records and distribute in multiple record tables
