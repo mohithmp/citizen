@@ -35,7 +35,7 @@ public class ObservationService {
 
 		// Get Paged list (Pagination)
 		long totalCount = query.countAll();
-		List<Observation> observations = query.offset(page * limit).limit(limit).asList();
+		List<Observation> observations = query.order("-updatedTime").offset(page * limit).limit(limit).asList();
 
 		// Construct Response
 		List<ObservationResponse> observationResponseList = new ArrayList<>();

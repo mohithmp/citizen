@@ -15,4 +15,9 @@ public class ObservationDAO {
 		return query;
 	}
 
+	public Observation findAccountObservation(String accountId, String observationId) {
+		 return ds.find(Observation.class).filter("isDeleted", false).filter("accountId", accountId)
+				.filter("observationId", observationId).get();
+	}
+
 }

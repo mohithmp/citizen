@@ -48,6 +48,8 @@ public class MyConstants {
 		public static final String ACCOUNT_DOESNT_EXIST = "account.doesnt.exist";
 		public static final String EMAIL_ALREADY_EXIST = "email.already.exist";
 		public static final String INVALID_ACCOUNT_TYPE = "invalid.account.type";
+		public static final String OBSERVATION_DOESNT_EXIST = "observation.doesnt.exist";
+		public static final String RECORD_INVALID_FIELD = "record.invalid.field";
 	}
 
 	public class PushNotificationMessages {
@@ -64,5 +66,5 @@ public class MyConstants {
 		public static final int NUMBER = 2;
 		public static final int IMAGE = 3;
 	}
-	
+
 }
