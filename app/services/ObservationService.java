@@ -11,8 +11,8 @@ import org.mongodb.morphia.query.Query;
 import daos.AccountSessionDAO;
 import daos.ObservationDAO;
 import dtos.request.CreateObservationRequestDTO;
+
 import dtos.request.UpdateObservationRequestDTO;
-import dtos.response.CreateObservationresponseDTO;
 import dtos.response.GetObservationResponseDTO;
 import exceptions.MyException;
 import models.FieldPOJO;
@@ -62,9 +62,9 @@ public class ObservationService {
 		return response;
 	}
 
-	public CreateObservationresponseDTO createObervation(CreateObservationRequestDTO payload) throws MyException {
-		// TODO Auto-generated method stub
+	public ObservationResponse createObervation(CreateObservationRequestDTO payload) throws MyException {
 
+		// Validate fields
 		for (FieldRequestPOJO field : payload.fields) {
 			if (field.fieldTitle == null) {
 				throw new MyException(ApiFailureMessages.INVALID_FIELD);
@@ -73,27 +73,31 @@ public class ObservationService {
 				throw new MyException(ApiFailureMessages.INVALID_FIELD);
 			}
 		}
+
+		// Create Observation
 		Observation newObservation = new Observation();
 		newObservation.setAccountId(accountSessionDAO.getAccountIdByContext());
 		newObservation.setTitle(payload.title);
 		newObservation.setDescription(payload.description);
-		List<FieldPOJO> fd = new ArrayList<>();
+		List<FieldPOJO> fieldList = new ArrayList<FieldPOJO>();
 		for (FieldRequestPOJO field : payload.fields) {
 			FieldPOJO fp = new FieldPOJO();
 			fp.setId(UUID.randomUUID().toString());
 			fp.setTitle(field.fieldTitle);
 			fp.setType(field.fieldType);
-			fd.add(fp);
+			fieldList.add(fp);
 		}
-		newObservation.setFields(fd);
+		newObservation.setFields(fieldList);
 		newObservation.setCategory(payload.category);
 		newObservation.setTags(payload.tags);
 		Observation observation = observationDAO.add(newObservation);
 
-		return null;
+		ObservationResponse observationResponse = constructResponseUtils.constructObservationResponse(observation);
+
+		return observationResponse;
 	}
 
-	public void updateObervation(UpdateObservationRequestDTO payload) throws MyException {
+	public ObservationResponse updateObervation(UpdateObservationRequestDTO payload) throws MyException {
 		String accountid = accountSessionDAO.getAccountIdByContext();
 
 		Observation observation = observationDAO.findAccountObservation(accountid, payload.observationId);
@@ -101,6 +105,9 @@ public class ObservationService {
 		if (observation != null) {
 
 			observationDAO.update(observation, payload.title, payload.description, payload.tags);
+			ObservationResponse observationResponse = constructResponseUtils.constructObservationResponse(observation);
+
+			return observationResponse;
 			
 		} else {
 			throw new MyException(ApiFailureMessages.INVALID_OBSERVATION_ID);
