@@ -24,7 +24,6 @@ public class ObservationDAO {
 		newObservation.setUpdatedTime(new Date().getTime());
 		ds.save(newObservation);
 		return newObservation;
-		
 	}
 
 	public Observation findAccountObservation(String accountId, String observationId) {
