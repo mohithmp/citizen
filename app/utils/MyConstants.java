@@ -1,5 +1,8 @@
 package utils;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class MyConstants {
 
 	public static final int DEFAULT_LIMIT = 10;
@@ -50,6 +53,7 @@ public class MyConstants {
 		public static final String INVALID_ACCOUNT_TYPE = "invalid.account.type";
 		public static final String OBSERVATION_DOESNT_EXIST = "observation.doesnt.exist";
 		public static final String RECORD_INVALID_FIELD = "record.invalid.field";
+		public static final String INVALID_FIELD = "invalid.field";
 	}
 
 	public class PushNotificationMessages {
@@ -60,6 +64,8 @@ public class MyConstants {
 		public static final int RESEARCHER = 1;
 		public static final int USER = 2;
 	}
+
+	public static List<Integer> FIELD_TYPES = Arrays.asList(FIELD_TYPE.TEXT, FIELD_TYPE.NUMBER, FIELD_TYPE.IMAGE);
 
 	public class FIELD_TYPE {
 		public static final int TEXT = 1;

@@ -17,3 +17,5 @@ POST    /v1/account/signup                     	controllers.AccountController.si
 POST    /v1/account/signin                     	controllers.AccountController.signIn()
 PUT	    /v1/researcher	                     	controllers.AccountController.updateResearcher()
 GET		/v1/observation							controllers.ObservationController.getObservations(accountId:String?=null,  searchText:String?=null, page:Integer?=0, limit:Integer?=0)
+POST	/v1/observation							controllers.ObservationController.createObservation()
+POST	/v1/record								controllers.RecordController.addRecord()

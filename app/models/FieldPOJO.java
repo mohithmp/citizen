@@ -8,6 +8,8 @@ public class FieldPOJO {
 
 	private Integer type;
 
+	private boolean isNullable = false;
+
 	public String getId() {
 		return id;
 	}
@@ -30,6 +32,14 @@ public class FieldPOJO {
 
 	public void setType(Integer type) {
 		this.type = type;
+	}
+
+	public boolean isNullable() {
+		return isNullable;
+	}
+
+	public void setNullable(boolean isNullable) {
+		this.isNullable = isNullable;
 	}
 
 }
