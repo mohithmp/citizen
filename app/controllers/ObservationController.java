@@ -9,9 +9,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import actions.authentication.AuthenticateAccount;
 import actions.authentication.ValidateAccountAccess.AccountAccessValidation;
 import actions.jsonrequestvalidation.ValidateJson;
-import dtos.request.AccountSignUpRequestDTO;
 import dtos.request.CreateObservationRequestDTO;
-import dtos.request.UpdateResearcherRequestDTO;
+import dtos.request.UpdateObservationRequestDTO;
 import dtos.response.CreateObservationresponseDTO;
 import dtos.response.GetObservationResponseDTO;
 import play.mvc.BodyParser;
@@ -20,7 +19,7 @@ import services.ObservationService;
 import utils.CustomObjectMapper;
 import utils.MyConstants;
 import utils.MyConstants.ACCOUNT_TYPE;
-import pojo.ObservationResponse;
+import utils.MyConstants.ApiSuccessResponse;
 
 public class ObservationController extends BaseController {
 
@@ -52,7 +51,7 @@ public class ObservationController extends BaseController {
 	
 
 	@BodyParser.Of(BodyParser.Json.class)
-	@ValidateJson(ObservationResponse.class)
+	@ValidateJson(CreateObservationRequestDTO.class)
 	@AuthenticateAccount()
 	@AccountAccessValidation(ACCOUNT_TYPE.RESEARCHER)
 	public CompletionStage<Result> createObservation(){
@@ -72,5 +71,24 @@ public class ObservationController extends BaseController {
 		return successResponsePromise(response);
 	}
 		
+	@BodyParser.Of(BodyParser.Json.class)
+	@ValidateJson(UpdateObservationRequestDTO.class)
+	@AuthenticateAccount()
+	@AccountAccessValidation(ACCOUNT_TYPE.RESEARCHER)
+	public CompletionStage<Result> updateObervation(){
+		JsonNode inputData = request().body().asJson();
+		try {
+			UpdateObservationRequestDTO payload = customObjectMapper.getInstance().convertValue(inputData,
+					UpdateObservationRequestDTO.class);		
+			observationService.updateObervation(payload);
+		}
+		catch (Exception e) {
+
+			return failureResponsePromise(e);
+		}
+
+		return successResponsePromise(ApiSuccessResponse.SUCCESS);
+		
+	}
 
 }
