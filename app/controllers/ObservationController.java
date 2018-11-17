@@ -10,6 +10,7 @@ import actions.authentication.AuthenticateAccount;
 import actions.authentication.ValidateAccountAccess.AccountAccessValidation;
 import actions.jsonrequestvalidation.ValidateJson;
 import dtos.request.CreateObservationRequestDTO;
+import dtos.request.UpdateObservationRequestDTO;
 import dtos.response.GetObservationResponseDTO;
 import play.mvc.BodyParser;
 import play.mvc.Result;
@@ -48,7 +49,7 @@ public class ObservationController extends BaseController {
 	}
 
 	@BodyParser.Of(BodyParser.Json.class)
-	@ValidateJson(ObservationResponse.class)
+	@ValidateJson(CreateObservationRequestDTO.class)
 	@AuthenticateAccount()
 	@AccountAccessValidation(ACCOUNT_TYPE.RESEARCHER)
 	public CompletionStage<Result> createObservation() {
@@ -66,6 +67,27 @@ public class ObservationController extends BaseController {
 		}
 
 		return successResponsePromise(response);
+	}
+
+	@BodyParser.Of(BodyParser.Json.class)
+	@ValidateJson(UpdateObservationRequestDTO.class)
+	@AuthenticateAccount()
+	@AccountAccessValidation(ACCOUNT_TYPE.RESEARCHER)
+	public CompletionStage<Result> updateObervation() {
+		JsonNode inputData = request().body().asJson();
+		ObservationResponse response;
+		try {
+			
+			UpdateObservationRequestDTO payload = customObjectMapper.getInstance().convertValue(inputData,
+					UpdateObservationRequestDTO.class);
+			response = observationService.updateObervation(payload);
+			
+		} catch (Exception e) {
+			return failureResponsePromise(e);
+		}
+
+		return successResponsePromise(response);
+
 	}
 
 }

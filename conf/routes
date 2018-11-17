@@ -20,3 +20,5 @@ GET		/v1/observation							controllers.ObservationController.getObservations(acc
 POST	/v1/observation							controllers.ObservationController.createObservation()
 POST	/v1/record								controllers.RecordController.addRecord()
 POST	/v1/google-sheet/import					controllers.ImportController.importGoogleSheet()
+PUT 	/v1/observation							controllers.ObservationController.updateObervation()
+POST	/v1/record								controllers.RecordController.addRecord()

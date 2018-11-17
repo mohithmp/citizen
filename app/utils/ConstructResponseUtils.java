@@ -1,15 +1,10 @@
 package utils;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import dtos.response.AccountResponseDTO;
 import models.Account;
 import models.AccountSession;
 import models.Observation;
-import models.Tag;
 import pojo.ObservationResponse;
-import pojo.TagResponse;
 import utils.MyConstants.ACCOUNT_TYPE;
 
 public class ConstructResponseUtils {

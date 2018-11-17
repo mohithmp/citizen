@@ -11,6 +11,8 @@ import org.mongodb.morphia.query.Query;
 import daos.AccountSessionDAO;
 import daos.ObservationDAO;
 import dtos.request.CreateObservationRequestDTO;
+
+import dtos.request.UpdateObservationRequestDTO;
 import dtos.response.GetObservationResponseDTO;
 import exceptions.MyException;
 import models.FieldPOJO;
@@ -96,4 +98,21 @@ public class ObservationService {
 		return observationResponse;
 	}
 
+	public ObservationResponse updateObervation(UpdateObservationRequestDTO payload) throws MyException {
+		String accountid = accountSessionDAO.getAccountIdByContext();
+
+		Observation observation = observationDAO.findAccountObservation(accountid, payload.observationId);
+
+		if (observation != null) {
+
+			observationDAO.update(observation, payload.title, payload.description, payload.tags);
+			ObservationResponse observationResponse = constructResponseUtils.constructObservationResponse(observation);
+
+			return observationResponse;
+			
+		} else {
+			throw new MyException(ApiFailureMessages.INVALID_OBSERVATION_ID);
+		}
+
+	}
 }
