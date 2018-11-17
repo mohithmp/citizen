@@ -13,7 +13,6 @@ import dtos.request.AddRecordRequestDTO;
 import exceptions.MyException;
 import models.FieldPOJO;
 import models.Observation;
-import models.Record;
 import utils.MyConstants.ApiFailureMessages;
 
 public class RecordService {
@@ -28,7 +27,7 @@ public class RecordService {
 	public void addRecord(AddRecordRequestDTO payload) throws MyException {
 
 		String accountId = accountSessionDAO.getAccountIdByContext();
-		
+
 		Observation observation = observationDAO.findAccountObservation(accountId, payload.observationId);
 
 		if (observation == null) {
@@ -52,7 +51,7 @@ public class RecordService {
 		// Categorize Records and distribute in multiple record tables
 		switch (observation.getCategory()) {
 		default:
-			Record record = recordDAO.add(payload);
+			recordDAO.add(payload.observationId, payload.data);
 			break;
 		}
 

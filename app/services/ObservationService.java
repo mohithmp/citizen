@@ -40,7 +40,8 @@ public class ObservationService {
 
 		// TODO Search based on Tags
 		if (searchText != null) {
-			query.search("title", searchText);
+			query.or(query.criteria("title").containsIgnoreCase(searchText),
+					query.criteria("description").containsIgnoreCase(searchText));
 		}
 
 		// Get Paged list (Pagination)

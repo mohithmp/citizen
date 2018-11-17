@@ -54,6 +54,8 @@ public class MyConstants {
 		public static final String OBSERVATION_DOESNT_EXIST = "observation.doesnt.exist";
 		public static final String RECORD_INVALID_FIELD = "record.invalid.field";
 		public static final String INVALID_FIELD = "invalid.field";
+		public static final String CANNOT_IMPORT_WITH_EXISTING_RECORDS = "cannot.import.with.existing.records";
+
 	}
 
 	public class PushNotificationMessages {
