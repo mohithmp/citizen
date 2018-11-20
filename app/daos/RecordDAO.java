@@ -2,6 +2,7 @@ package daos;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import org.mongodb.morphia.Datastore;
@@ -28,6 +29,11 @@ public class RecordDAO {
 	public boolean isRecordExists(String observationId) throws MyException {
 		long count = ds.find(Record.class).filter("observationId", observationId).countAll();
 		return count != 0;
+	}
+
+	public List<Record> find(String observationId, int page, int limit) throws MyException {
+		return ds.find(Record.class).filter("observationId", observationId).order("-updatedTime").offset(page * limit)
+				.limit(limit).asList();
 	}
 
 }

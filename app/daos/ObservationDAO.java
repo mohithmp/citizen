@@ -29,6 +29,10 @@ public class ObservationDAO {
 
 	}
 
+	public Observation find(String observationId) {
+		return ds.find(Observation.class).filter("isDeleted", false).filter("observationId", observationId).get();
+	}
+
 	public Observation findAccountObservation(String accountId, String observationId) {
 		return ds.find(Observation.class).filter("isDeleted", false).filter("accountId", accountId)
 				.filter("observationId", observationId).get();

@@ -16,9 +16,10 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 POST    /v1/account/signup                     	controllers.AccountController.signUp()
 POST    /v1/account/signin                     	controllers.AccountController.signIn()
 PUT	    /v1/researcher	                     	controllers.AccountController.updateResearcher()
-GET		/v1/observation							controllers.ObservationController.getObservations(accountId:String?=null,  searchText:String?=null, page:Integer?=0, limit:Integer?=0)
+GET		/v1/observation							controllers.ObservationController.getObservations(accountId:String?=null, searchText:String?=null, observationId:String?=null, page:Integer?=0, limit:Integer?=0)
 POST	/v1/observation							controllers.ObservationController.createObservation()
 PUT 	/v1/observation							controllers.ObservationController.updateObervation()
 POST	/v1/record								controllers.RecordController.addRecord()
+GET		/v1/record								controllers.RecordController.getRecord(observationId:String?=null, page:Integer?=0, limit:Integer?=0)
 POST	/v1/google-sheet/import					controllers.ImportController.importGoogleSheet()
 

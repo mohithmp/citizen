@@ -4,18 +4,18 @@ import java.util.HashMap;
 
 import org.mongodb.morphia.annotations.Id;
 
-public class Record {
+public class Graph {
 
 	@Id
 	private String id;
 
-	private String recordId;
-
 	private String observationId;
 
-	private HashMap<String, Object> data;
+	private String accountId;
 
-	private Boolean isVerfied;
+	private String title;
+
+	private HashMap<String, Object> parameters;
 
 	private Long createdTime;
 
@@ -29,14 +29,6 @@ public class Record {
 		this.id = id;
 	}
 
-	public String getRecordId() {
-		return recordId;
-	}
-
-	public void setRecordId(String recordId) {
-		this.recordId = recordId;
-	}
-
 	public String getObservationId() {
 		return observationId;
 	}
@@ -45,12 +37,28 @@ public class Record {
 		this.observationId = observationId;
 	}
 
-	public HashMap<String, Object> getData() {
-		return data;
+	public String getAccountId() {
+		return accountId;
 	}
 
-	public void setData(HashMap<String, Object> data) {
-		this.data = data;
+	public void setAccountId(String accountId) {
+		this.accountId = accountId;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public HashMap<String, Object> getParameters() {
+		return parameters;
+	}
+
+	public void setParameters(HashMap<String, Object> parameters) {
+		this.parameters = parameters;
 	}
 
 	public Long getCreatedTime() {

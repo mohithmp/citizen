@@ -13,6 +13,7 @@ import dtos.request.AddRecordRequestDTO;
 import exceptions.MyException;
 import models.FieldPOJO;
 import models.Observation;
+import models.Record;
 import utils.MyConstants.ApiFailureMessages;
 
 public class RecordService {
@@ -55,6 +56,26 @@ public class RecordService {
 			break;
 		}
 
+	}
+
+	public List<Record> getRecord(String observationId, int page, int limit) throws MyException {
+
+		Observation observation = observationDAO.find(observationId);
+
+		if (observation == null) {
+			throw new MyException(ApiFailureMessages.OBSERVATION_DOESNT_EXIST);
+		}
+
+		List<Record> records = new ArrayList<Record>();
+
+		// Categorize Records and get records
+		switch (observation.getCategory()) {
+		default:
+			records = recordDAO.find(observationId, page, limit);
+			break;
+		}
+
+		return records;
 	}
 
 }

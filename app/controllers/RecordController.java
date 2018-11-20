@@ -1,5 +1,7 @@
 package controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.CompletionStage;
 
 import javax.inject.Inject;
@@ -10,11 +12,16 @@ import actions.authentication.AuthenticateAccount;
 import actions.authentication.ValidateAccountAccess.AccountAccessValidation;
 import actions.jsonrequestvalidation.ValidateJson;
 import dtos.request.AddRecordRequestDTO;
+import dtos.response.GetObservationResponseDTO;
+import exceptions.MyException;
+import models.Record;
 import play.mvc.BodyParser;
 import play.mvc.Result;
 import services.RecordService;
 import utils.CustomObjectMapper;
+import utils.MyConstants;
 import utils.MyConstants.ACCOUNT_TYPE;
+import utils.MyConstants.ApiFailureMessages;
 import utils.MyConstants.ApiSuccessResponse;
 
 public class RecordController extends BaseController {
@@ -42,6 +49,29 @@ public class RecordController extends BaseController {
 		}
 
 		return successResponsePromise(ApiSuccessResponse.SUCCESS);
+	}
+
+	@AuthenticateAccount(isPublicApi = true)
+	public CompletionStage<Result> getRecord(String observationId, int page, int limit) {
+
+		List<Record> response = new ArrayList<Record>();
+		try {
+
+			if (observationId == null) {
+				throw new MyException(ApiFailureMessages.OBSERVATION_ID_NOT_FOUND);
+			}
+
+			if (limit == 0) {
+				limit = MyConstants.DEFAULT_LIMIT;
+			}
+
+			response = recordService.getRecord(observationId, page, limit);
+
+		} catch (Exception e) {
+			return failureResponsePromise(e);
+		}
+
+		return successResponsePromise(response);
 	}
 
 }
