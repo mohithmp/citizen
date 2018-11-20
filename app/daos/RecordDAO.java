@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.UUID;
 
 import org.mongodb.morphia.Datastore;
+import org.mongodb.morphia.query.Query;
 
 import exceptions.MyException;
 import models.Record;
@@ -34,6 +35,10 @@ public class RecordDAO {
 	public List<Record> find(String observationId, int page, int limit) throws MyException {
 		return ds.find(Record.class).filter("observationId", observationId).order("-updatedTime").offset(page * limit)
 				.limit(limit).asList();
+	}
+	
+	public Query<Record> getBasicQuery() throws MyException {
+		return ds.find(Record.class);
 	}
 
 }

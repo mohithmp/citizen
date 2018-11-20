@@ -1,7 +1,5 @@
 package controllers;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.CompletionStage;
 
 import javax.inject.Inject;
@@ -12,9 +10,8 @@ import actions.authentication.AuthenticateAccount;
 import actions.authentication.ValidateAccountAccess.AccountAccessValidation;
 import actions.jsonrequestvalidation.ValidateJson;
 import dtos.request.AddRecordRequestDTO;
-import dtos.response.GetObservationResponseDTO;
+import dtos.response.GetRecordResponseDTO;
 import exceptions.MyException;
-import models.Record;
 import play.mvc.BodyParser;
 import play.mvc.Result;
 import services.RecordService;
@@ -54,7 +51,7 @@ public class RecordController extends BaseController {
 	@AuthenticateAccount(isPublicApi = true)
 	public CompletionStage<Result> getRecord(String observationId, int page, int limit) {
 
-		List<Record> response = new ArrayList<Record>();
+		GetRecordResponseDTO response = new GetRecordResponseDTO();
 		try {
 
 			if (observationId == null) {
