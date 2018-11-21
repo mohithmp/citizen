@@ -71,6 +71,7 @@ public class MyConstants {
 	public static List<Integer> FIELD_TYPES = Arrays.asList(FIELD_TYPE.TEXT, FIELD_TYPE.NUMBER, FIELD_TYPE.IMAGE);
 
 	public class FIELD_TYPE {
+		public static final int UNKNOWN = 0;
 		public static final int TEXT = 1;
 		public static final int NUMBER = 2;
 		public static final int IMAGE = 3;

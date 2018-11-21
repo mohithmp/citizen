@@ -18,7 +18,7 @@ import utils.MyConstants.ApiFailureMessages;
 public class AccountDAO {
 	@Inject
 	PasswordEncryptDecrypt passwordEncrypt;
-	
+
 	private static Datastore ds = MongoConnection.getDS();
 
 	public Account find(String accountId) throws MyException {
@@ -42,14 +42,14 @@ public class AccountDAO {
 		return newAccount;
 	}
 
-	public void update(String accountId, String name , String email, String password) {
+	public void update(String accountId, String name, String email, String password) {
 		Query<Account> account = ds.find(Account.class).filter("accountId", accountId);
 
 		UpdateOperations<Account> ops = ds.createUpdateOperations(Account.class);
 		if (name != null) {
 			ops.set("researcher.name", name);
 		}
-		if(email !=null) {
+		if (email != null) {
 			ops.set("email", email);
 		}
 		if (password != null) {

@@ -111,6 +111,7 @@ public class ObservationService {
 		if (observation != null) {
 
 			observationDAO.update(observation, payload.title, payload.description, payload.tags);
+			observation = observationDAO.find(observation.getObservationId());
 			ObservationResponse observationResponse = constructResponseUtils.constructObservationResponse(observation);
 
 			return observationResponse;

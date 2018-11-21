@@ -33,7 +33,7 @@ public class GoogleSheetApiService {
 		return sb.toString();
 	}
 
-	public List<HashMap<String, Object>> importSheet(String spreadSheetId, String range) throws IOException {
+	public ImportDataPOJO importSheet(String spreadSheetId, String range) throws IOException {
 
 		if (range == null) {
 			range = "Sheet1";
@@ -43,7 +43,8 @@ public class GoogleSheetApiService {
 
 		InputStream is = new URL(url).openStream();
 		List<HashMap<String, Object>> returnList = new ArrayList<HashMap<String, Object>>();
-
+		
+		ImportDataPOJO data = new ImportDataPOJO();
 		try {
 			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
 			String jsonText = readAll(rd);
@@ -51,6 +52,7 @@ public class GoogleSheetApiService {
 			JSONArray l = (JSONArray) json.get("values");
 			JSONArray jsonKeys = (JSONArray) l.get(0);
 			List<String> keys = new ArrayList<String>();
+			
 			for (int i = 0; i < jsonKeys.length(); i++) {
 				keys.add(jsonKeys.getString(i));
 			}
@@ -63,12 +65,18 @@ public class GoogleSheetApiService {
 				}
 				returnList.add(temphash);
 			}
+			
+			
+			data.data = returnList;
+			data.keys = keys;
 
 		} finally {
 			is.close();
 		}
 
-		return returnList;
+	
+
+		return data;
 	}
 
 }

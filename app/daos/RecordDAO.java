@@ -16,11 +16,12 @@ public class RecordDAO {
 
 	private static Datastore ds = MongoConnection.getDS();
 
-	public Record add(String observationId, HashMap<String, Object> data) {
+	public Record add(String observationId, HashMap<String, Object> data, boolean isVerified) {
 		Record newRecord = new Record();
 		newRecord.setRecordId(UUID.randomUUID().toString());
 		newRecord.setObservationId(observationId);
 		newRecord.setData(data);
+		newRecord.setIsVerified(isVerified);
 		newRecord.setCreatedTime(new Date().getTime());
 		newRecord.setUpdatedTime(new Date().getTime());
 		ds.save(newRecord);
@@ -36,7 +37,7 @@ public class RecordDAO {
 		return ds.find(Record.class).filter("observationId", observationId).order("-updatedTime").offset(page * limit)
 				.limit(limit).asList();
 	}
-	
+
 	public Query<Record> getBasicQuery() throws MyException {
 		return ds.find(Record.class);
 	}

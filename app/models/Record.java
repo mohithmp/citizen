@@ -15,7 +15,7 @@ public class Record {
 
 	private HashMap<String, Object> data;
 
-	private Boolean isVerfied;
+	private Boolean isVerified;
 
 	private Long createdTime;
 
@@ -67,6 +67,14 @@ public class Record {
 
 	public void setUpdatedTime(Long updatedTime) {
 		this.updatedTime = updatedTime;
+	}
+
+	public Boolean getIsVerified() {
+		return isVerified;
+	}
+
+	public void setIsVerified(Boolean isVerified) {
+		this.isVerified = isVerified;
 	}
 
 }

@@ -55,7 +55,7 @@ public class RecordService {
 		// Categorize Records and distribute in multiple record tables
 		switch (observation.getCategory()) {
 		default:
-			recordDAO.add(payload.observationId, payload.data);
+			recordDAO.add(payload.observationId, payload.data, true);
 			break;
 		}
 
