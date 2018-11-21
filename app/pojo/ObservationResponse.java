@@ -3,6 +3,7 @@ package pojo;
 import java.util.HashMap;
 import java.util.List;
 
+import dtos.response.AccountResponseDTO;
 import models.FieldPOJO;
 
 public class ObservationResponse {
@@ -26,5 +27,7 @@ public class ObservationResponse {
 	public Long createdTime;
 
 	public Long updatedTime;
+
+	public AccountResponseDTO account;
 
 }

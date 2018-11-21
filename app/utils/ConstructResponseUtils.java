@@ -1,6 +1,10 @@
 package utils;
 
+import javax.inject.Inject;
+
+import daos.AccountDAO;
 import dtos.response.AccountResponseDTO;
+import exceptions.MyException;
 import models.Account;
 import models.AccountSession;
 import models.Observation;
@@ -8,6 +12,9 @@ import pojo.ObservationResponse;
 import utils.MyConstants.ACCOUNT_TYPE;
 
 public class ConstructResponseUtils {
+
+	@Inject
+	AccountDAO accountDAO;
 
 	public AccountResponseDTO constructAccountResponse(Account account, AccountSession accountSession) {
 
@@ -33,7 +40,7 @@ public class ConstructResponseUtils {
 		return accountResponse;
 	}
 
-	public ObservationResponse constructObservationResponse(Observation observation) {
+	public ObservationResponse constructObservationResponse(Observation observation) throws MyException {
 
 		ObservationResponse response = new ObservationResponse();
 
@@ -47,6 +54,22 @@ public class ConstructResponseUtils {
 		response.isDeleted = observation.getIsDeleted();
 		response.createdTime = observation.getCreatedTime();
 		response.updatedTime = observation.getUpdatedTime();
+
+		Account account = accountDAO.find(observation.getAccountId());
+		AccountResponseDTO accountResponse = new AccountResponseDTO();
+		accountResponse.accountId = account.getAccountId();
+		accountResponse.email = account.getEmail();
+		accountResponse.accountType = account.getAccountType();
+
+		if (account.getAccountType() == ACCOUNT_TYPE.RESEARCHER) {
+			accountResponse.name = account.getResearcher().getName();
+			accountResponse.points = account.getResearcher().getPoints();
+		} else if (account.getAccountType() == ACCOUNT_TYPE.USER) {
+			accountResponse.name = account.getUser().getName();
+			accountResponse.points = account.getUser().getPoints();
+		}
+
+		response.account = accountResponse;
 
 		return response;
 	}

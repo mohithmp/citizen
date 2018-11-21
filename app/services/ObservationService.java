@@ -33,7 +33,7 @@ public class ObservationService {
 	AccountSessionDAO accountSessionDAO;
 
 	public GetObservationResponseDTO getObservations(String accountId, String observationId, String searchText,
-			int page, int limit) {
+			int page, int limit) throws MyException {
 
 		Query<Observation> query = observationDAO.getBasicQuery();
 
