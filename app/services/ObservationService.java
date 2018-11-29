@@ -32,12 +32,17 @@ public class ObservationService {
 	@Inject
 	AccountSessionDAO accountSessionDAO;
 
-	public GetObservationResponseDTO getObservations(String accountId, String searchText, int page, int limit) {
+	public GetObservationResponseDTO getObservations(String accountId, String observationId, String searchText,
+			int page, int limit) throws MyException {
 
 		Query<Observation> query = observationDAO.getBasicQuery();
 
 		if (accountId != null) {
 			query.filter("accountId", accountId);
+		}
+
+		if (observationId != null) {
+			query.filter("observationId", observationId);
 		}
 
 		// TODO Search based on Tags
@@ -105,10 +110,11 @@ public class ObservationService {
 		if (observation != null) {
 
 			observationDAO.update(observation, payload.title, payload.description, payload.tags);
+			observation = observationDAO.find(observation.getObservationId());
 			ObservationResponse observationResponse = constructResponseUtils.constructObservationResponse(observation);
 
 			return observationResponse;
-			
+
 		} else {
 			throw new MyException(ApiFailureMessages.INVALID_OBSERVATION_ID);
 		}

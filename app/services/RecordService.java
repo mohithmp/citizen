@@ -6,11 +6,14 @@ import java.util.Map.Entry;
 
 import javax.inject.Inject;
 
+import org.mongodb.morphia.query.Query;
+
 import daos.AccountSessionDAO;
 import daos.ObservationDAO;
 import daos.RecordDAO;
 import dtos.request.AddRecordRequestDTO;
 import dtos.request.EditRecordRequestDTO;
+import dtos.response.GetRecordResponseDTO;
 import exceptions.MyException;
 import models.FieldPOJO;
 import models.Observation;
@@ -53,7 +56,7 @@ public class RecordService {
 		// Categorize Records and distribute in multiple record tables
 		switch (observation.getCategory()) {
 		default:
-			recordDAO.add(payload.observationId, payload.data);
+			recordDAO.add(payload.observationId, payload.data, true);
 			break;
 		}
 
@@ -81,8 +84,30 @@ public class RecordService {
 				recordDAO.edit(rec, payload.data);
 			}
 			break;
-
 		}
+	}
+
+	public GetRecordResponseDTO getRecord(String observationId, int page, int limit) throws MyException {
+
+		Observation observation = observationDAO.find(observationId);
+
+		List<Record> records = new ArrayList<Record>();
+		long totalCount = 0;
+		// Categorize Records and get records
+		switch (observation.getCategory()) {
+		default:
+			Query<Record> query = recordDAO.getBasicQuery();
+			records = query.filter("observationId", observationId).order("-updatedTime").offset(page * limit)
+					.limit(limit).asList();
+			totalCount = query.countAll();
+			break;
+		}
+
+		GetRecordResponseDTO response = new GetRecordResponseDTO();
+		response.records = records;
+		response.totalCount = totalCount;
+
+		return response;
 	}
 
 }

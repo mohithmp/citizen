@@ -57,6 +57,7 @@ public class MyConstants {
 		public static final String CANNOT_IMPORT_WITH_EXISTING_RECORDS = "cannot.import.with.existing.records";
 		public static final String INVALID_OBSERVATION_ID = "invalid.observation.id";
 		public static final String INVALID_RECORD = "invalid.record";
+		public static final String OBSERVATION_ID_NOT_FOUND = "observation.id.not.found";
 	}
 
 	public class PushNotificationMessages {
@@ -71,6 +72,7 @@ public class MyConstants {
 	public static List<Integer> FIELD_TYPES = Arrays.asList(FIELD_TYPE.TEXT, FIELD_TYPE.NUMBER, FIELD_TYPE.IMAGE);
 
 	public class FIELD_TYPE {
+		public static final int UNKNOWN = 0;
 		public static final int TEXT = 1;
 		public static final int NUMBER = 2;
 		public static final int IMAGE = 3;

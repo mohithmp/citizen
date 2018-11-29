@@ -11,11 +11,15 @@ import actions.authentication.ValidateAccountAccess.AccountAccessValidation;
 import actions.jsonrequestvalidation.ValidateJson;
 import dtos.request.AddRecordRequestDTO;
 import dtos.request.EditRecordRequestDTO;
+import dtos.response.GetRecordResponseDTO;
+import exceptions.MyException;
 import play.mvc.BodyParser;
 import play.mvc.Result;
 import services.RecordService;
 import utils.CustomObjectMapper;
+import utils.MyConstants;
 import utils.MyConstants.ACCOUNT_TYPE;
+import utils.MyConstants.ApiFailureMessages;
 import utils.MyConstants.ApiSuccessResponse;
 
 public class RecordController extends BaseController {
@@ -57,8 +61,30 @@ public class RecordController extends BaseController {
 		} catch (Exception e) {
 			return failureResponsePromise(e);
 		}
-
 		return successResponsePromise(ApiSuccessResponse.SUCCESS);
 	}
 	
+	@AuthenticateAccount(isPublicApi = true)
+	public CompletionStage<Result> getRecord(String observationId, int page, int limit) {
+
+		GetRecordResponseDTO response = new GetRecordResponseDTO();
+		try {
+
+			if (observationId == null) {
+				throw new MyException(ApiFailureMessages.OBSERVATION_ID_NOT_FOUND);
+			}
+
+			if (limit == 0) {
+				limit = MyConstants.DEFAULT_LIMIT;
+			}
+
+			response = recordService.getRecord(observationId, page, limit);
+
+		} catch (Exception e) {
+			return failureResponsePromise(e);
+		}
+
+		return successResponsePromise(response);
+	}
+
 }

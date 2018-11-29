@@ -28,7 +28,8 @@ public class ObservationController extends BaseController {
 	private ObservationService observationService;
 
 	@AuthenticateAccount(isPublicApi = true)
-	public CompletionStage<Result> getObservations(String accountId, String searchText, int page, int limit) {
+	public CompletionStage<Result> getObservations(String accountId, String searchText, String observationId, int page,
+			int limit) {
 
 		GetObservationResponseDTO response = new GetObservationResponseDTO();
 		try {
@@ -37,7 +38,7 @@ public class ObservationController extends BaseController {
 				limit = MyConstants.DEFAULT_LIMIT;
 			}
 
-			response = observationService.getObservations(accountId, searchText, page, limit);
+			response = observationService.getObservations(accountId, observationId, searchText, page, limit);
 			response.page = page;
 			response.limit = limit;
 
@@ -77,11 +78,11 @@ public class ObservationController extends BaseController {
 		JsonNode inputData = request().body().asJson();
 		ObservationResponse response;
 		try {
-			
+
 			UpdateObservationRequestDTO payload = customObjectMapper.getInstance().convertValue(inputData,
 					UpdateObservationRequestDTO.class);
 			response = observationService.updateObervation(payload);
-			
+
 		} catch (Exception e) {
 			return failureResponsePromise(e);
 		}
