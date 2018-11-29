@@ -8,7 +8,9 @@ import exceptions.MyException;
 import models.Account;
 import models.AccountSession;
 import models.Observation;
+import models.Record;
 import pojo.ObservationResponse;
+import pojo.RecordResponse;
 import utils.MyConstants.ACCOUNT_TYPE;
 
 public class ConstructResponseUtils {
@@ -72,6 +74,19 @@ public class ConstructResponseUtils {
 		response.account = accountResponse;
 
 		return response;
+	}
+	
+	public RecordResponse constructRecordResponse(Record record) {
+		
+		RecordResponse response = new RecordResponse();
+		
+		response.recordId = record.getRecordId();
+		response.observationId = record.getObservationId();
+		response.data = record.getData();
+		response.createdTime = record.getCreatedTime();
+		response.updatedTime = record.getUpdatedTime();
+		return response;
+		
 	}
 
 }

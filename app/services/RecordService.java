@@ -12,6 +12,7 @@ import daos.AccountSessionDAO;
 import daos.ObservationDAO;
 import daos.RecordDAO;
 import dtos.request.AddRecordRequestDTO;
+import dtos.request.EditRecordRequestDTO;
 import dtos.response.GetRecordResponseDTO;
 import exceptions.MyException;
 import models.FieldPOJO;
@@ -61,13 +62,34 @@ public class RecordService {
 
 	}
 
-	public GetRecordResponseDTO getRecord(String observationId, int page, int limit) throws MyException {
+	public void editRecord(EditRecordRequestDTO payload) throws MyException {
+		String accountId = accountSessionDAO.getAccountIdByContext();
 
-		Observation observation = observationDAO.find(observationId);
+		Observation observation = observationDAO.findAccountObservation(accountId, payload.observationId);
 
 		if (observation == null) {
 			throw new MyException(ApiFailureMessages.OBSERVATION_DOESNT_EXIST);
 		}
+
+		// TODO Get field names in a list
+
+		switch (observation.getCategory()) {
+
+		default:
+			Record rec = recordDAO.findRecord(payload.recordId, payload.observationId);
+
+			if (rec == null) {
+				throw new MyException(ApiFailureMessages.INVALID_RECORD);
+			} else {
+				recordDAO.edit(rec, payload.data);
+			}
+			break;
+		}
+	}
+
+	public GetRecordResponseDTO getRecord(String observationId, int page, int limit) throws MyException {
+
+		Observation observation = observationDAO.find(observationId);
 
 		List<Record> records = new ArrayList<Record>();
 		long totalCount = 0;
