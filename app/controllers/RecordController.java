@@ -10,6 +10,7 @@ import actions.authentication.AuthenticateAccount;
 import actions.authentication.ValidateAccountAccess.AccountAccessValidation;
 import actions.jsonrequestvalidation.ValidateJson;
 import dtos.request.AddRecordRequestDTO;
+import dtos.request.EditRecordRequestDTO;
 import play.mvc.BodyParser;
 import play.mvc.Result;
 import services.RecordService;
@@ -43,5 +44,21 @@ public class RecordController extends BaseController {
 
 		return successResponsePromise(ApiSuccessResponse.SUCCESS);
 	}
+	@BodyParser.Of(BodyParser.Json.class)
+	@ValidateJson(EditRecordRequestDTO.class)
+	@AuthenticateAccount()
+	@AccountAccessValidation(ACCOUNT_TYPE.RESEARCHER)
+	public CompletionStage<Result> editRecord() {
+		JsonNode inputData = request().body().asJson();
+		try {
+			EditRecordRequestDTO payload = customObjectMapper.getInstance().convertValue(inputData,
+					EditRecordRequestDTO.class);
+			recordService.editRecord(payload);
+		} catch (Exception e) {
+			return failureResponsePromise(e);
+		}
 
+		return successResponsePromise(ApiSuccessResponse.SUCCESS);
+	}
+	
 }

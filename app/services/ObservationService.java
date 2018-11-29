@@ -100,7 +100,6 @@ public class ObservationService {
 
 	public ObservationResponse updateObervation(UpdateObservationRequestDTO payload) throws MyException {
 		String accountid = accountSessionDAO.getAccountIdByContext();
-
 		Observation observation = observationDAO.findAccountObservation(accountid, payload.observationId);
 
 		if (observation != null) {
